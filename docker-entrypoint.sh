@@ -15,5 +15,11 @@ mkdir -p /var/www/html/writable/cache /var/www/html/writable/logs /var/www/html/
 chown -R www-data:www-data /var/www/html/writable
 chmod -R 775 /var/www/html/writable
 
+# Auto-initialize database if DB_HOST or DATABASE_URL is configured
+if [ -n "$DB_HOST" ] || [ -n "$DATABASE_URL" ] || [ -n "$MYSQL_URL" ]; then
+    echo "Cloud database environment variable detected. Checking database..."
+    php spark db:init || echo "Notice: db:init check completed."
+fi
+
 echo "Starting Apache web server..."
 exec apache2-foreground
