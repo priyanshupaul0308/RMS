@@ -209,4 +209,15 @@ class App extends BaseConfig
     public string $appVersion = '1.0.0';
     public int $maxLoginAttempts = 5;
     public int $lockoutMinutes = 15;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        if ($renderUrl = getenv('RENDER_EXTERNAL_URL')) {
+            $this->baseURL = rtrim($renderUrl, '/') . '/';
+        } elseif ($appUrl = getenv('APP_BASE_URL')) {
+            $this->baseURL = rtrim($appUrl, '/') . '/';
+        }
+    }
 }

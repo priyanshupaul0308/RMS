@@ -1,0 +1,16 @@
+.git
+.gitignore
+Start_MySQL.bat
+inspect_orders_and_drawer.php
+check_perms.php
+details.txt
+writable/logs/*
+writable/session/*
+writable/debugbar/*
+writable/cache/*
+!writable/logs/.gitkeep
+!writable/session/.gitkeep
+!writable/debugbar/.gitkeep
+!writable/cache/.gitkeep
+!writable/uploads/.gitkeep
+!writable/backups/.gitkeep

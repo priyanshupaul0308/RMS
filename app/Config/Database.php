@@ -78,18 +78,51 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Allow environment variable overrides for deployment flexibility
-        if (getenv('DB_HOST') !== false) {
-            $this->default['hostname'] = getenv('DB_HOST');
+        // Support database URL format (e.g. mysql://user:pass@host:port/dbname)
+        $dbUrl = getenv('DATABASE_URL') ?: (getenv('MYSQL_URL') ?: ($_ENV['DATABASE_URL'] ?? null));
+        if ($dbUrl) {
+            $parsed = parse_url($dbUrl);
+            if (!empty($parsed['host'])) {
+                $this->default['hostname'] = $parsed['host'];
+            }
+            if (!empty($parsed['user'])) {
+                $this->default['username'] = $parsed['user'];
+            }
+            if (isset($parsed['pass'])) {
+                $this->default['password'] = $parsed['pass'];
+            }
+            if (!empty($parsed['path'])) {
+                $this->default['database'] = ltrim($parsed['path'], '/');
+            }
+            if (!empty($parsed['port'])) {
+                $this->default['port'] = (int)$parsed['port'];
+            }
         }
-        if (getenv('DB_USER') !== false) {
-            $this->default['username'] = getenv('DB_USER');
+
+        // Allow explicit individual environment variable overrides
+        $envHost = getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? null);
+        if ($envHost) {
+            $this->default['hostname'] = $envHost;
         }
-        if (getenv('DB_PASS') !== false) {
-            $this->default['password'] = getenv('DB_PASS');
+
+        $envUser = getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? null);
+        if ($envUser) {
+            $this->default['username'] = $envUser;
         }
-        if (getenv('DB_NAME') !== false) {
-            $this->default['database'] = getenv('DB_NAME');
+
+        $envPass = getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? (getenv('DB_PASSWORD') ?: ($_ENV['DB_PASSWORD'] ?? null)));
+        if ($envPass !== null) {
+            $this->default['password'] = $envPass;
+        }
+
+        $envName = getenv('DB_NAME') ?: ($_ENV['DB_NAME'] ?? (getenv('DB_DATABASE') ?: ($_ENV['DB_DATABASE'] ?? null)));
+        if ($envName) {
+            $this->default['database'] = $envName;
+        }
+
+        $envPort = getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? null);
+        if ($envPort) {
+            $this->default['port'] = (int)$envPort;
         }
     }
 }
