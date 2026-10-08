@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
     libzip-dev \
     libonig-dev \
+    mariadb-server \
+    mariadb-client \
     zip \
     unzip \
     curl \
@@ -21,6 +23,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         zip \
         opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pre-configure MariaDB runtime directories
+RUN mkdir -p /run/mysqld /var/lib/mysql \
+    && chown -R mysql:mysql /run/mysqld /var/lib/mysql \
+    && chmod 777 /run/mysqld
 
 # Enable Apache mod_rewrite and mod_headers
 RUN a2enmod rewrite headers
