@@ -1,0 +1,259 @@
+﻿/* ============================================================================
+   RMS Auth Pages CSS – Login, Forgot Password, Reset Password
+   ============================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:        hsl(224, 85%, 56%);
+  --primary-dark:   hsl(224, 80%, 44%);
+  --primary-glow:   hsla(224, 85%, 56%, 0.25);
+  --accent:         hsl(162, 70%, 48%);
+  --danger:         hsl(0, 78%, 57%);
+  --success:        hsl(142, 65%, 42%);
+  --warning:        hsl(38, 92%, 52%);
+  --surface:        hsl(222, 30%, 10%);
+  --surface-card:   hsl(222, 25%, 14%);
+  --surface-input:  hsl(222, 22%, 18%);
+  --border:         hsl(222, 20%, 24%);
+  --text-primary:   hsl(210, 40%, 96%);
+  --text-secondary: hsl(210, 20%, 68%);
+  --radius:         12px;
+  --radius-sm:      8px;
+  --shadow-lg:      0 25px 50px -12px rgba(0,0,0,0.5);
+  --transition:     0.2s ease;
+}
+
+body.auth-body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--surface);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── Auth Wrapper ─────────────────────────────────────────────────────────── */
+.auth-wrapper {
+  display: -webkit-flex; display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ── Left Panel ───────────────────────────────────────────────────────────── */
+.auth-panel-left {
+  -webkit-flex: 0 0 40%; flex: 0 0 40%;
+  background: linear-gradient(135deg, hsl(224,85%,36%) 0%, hsl(260,70%,28%) 100%);
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.auth-brand { text-align: center; position: relative; z-index: 1; margin-bottom: 3rem; }
+
+.brand-icon  { font-size: 4rem; margin-bottom: .75rem; }
+.brand-name  { font-size: 2.5rem; font-weight: 800; color: #fff; letter-spacing: -1px; }
+.brand-tagline { font-size: .95rem; color: rgba(255,255,255,0.7); margin-top: .25rem; }
+
+.auth-illustration {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  position: relative; z-index: 1;
+}
+
+.stats-card {
+  background: rgba(255,255,255,0.12);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  padding: .875rem 1.25rem;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 1rem;
+  color: #fff;
+  -webkit-animation: slideInLeft .5s ease forwards; animation: slideInLeft .5s ease forwards;
+}
+.stats-card:nth-child(2) { -webkit-animation-delay: .1s; animation-delay: .1s; }
+.stats-card:nth-child(3) { -webkit-animation-delay: .2s; animation-delay: .2s; }
+
+.stat-icon  { font-size: 1.75rem; }
+.stat-value { font-size: 1.5rem; font-weight: 700; }
+.stat-label { font-size: .75rem; color: rgba(255,255,255,0.65); }
+
+/* ── Right Panel ──────────────────────────────────────────────────────────── */
+.auth-panel-right {
+  -webkit-flex: 1; flex: 1;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  padding: 2rem;
+  background: var(--surface);
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 420px;
+  -webkit-animation: fadeInUp .45s ease; animation: fadeInUp .45s ease;
+}
+
+.auth-header { margin-bottom: 2rem; }
+.auth-header h2 { font-size: 1.875rem; font-weight: 700; color: var(--text-primary); }
+.auth-header p  { font-size: .9rem; color: var(--text-secondary); margin-top: .25rem; }
+
+/* ── Alerts ───────────────────────────────────────────────────────────────── */
+.alert {
+  padding: .875rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: flex-start; align-items: flex-start;
+  gap: .5rem;
+  font-size: .875rem;
+}
+.alert-error   { background: hsla(0,78%,57%,.15); border: 1px solid hsla(0,78%,57%,.3); color: hsl(0,78%,75%); }
+.alert-success { background: hsla(142,65%,42%,.15); border: 1px solid hsla(142,65%,42%,.3); color: hsl(142,65%,65%); }
+.alert-icon    { font-size: 1rem; margin-top: 1px; }
+.error-list    { list-style: disc; margin-left: 1rem; }
+.error-list li { margin-top: .25rem; }
+
+/* ── Form Elements ────────────────────────────────────────────────────────── */
+.form-group  { margin-bottom: 1.25rem; }
+
+.form-label {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: center; align-items: center;
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: .5rem;
+}
+.forgot-link { color: var(--primary); text-decoration: none; font-size: .8rem; }
+.forgot-link:hover { text-decoration: underline; }
+
+.input-wrapper {
+  position: relative;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+}
+.input-icon {
+  position: absolute;
+  left: .875rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.form-input {
+  width: 100%;
+  padding: .75rem .875rem .75rem 2.75rem;
+  background: var(--surface-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: .9375rem;
+  font-family: inherit;
+  -webkit-transition: border-color var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.form-input::placeholder { color: hsl(210,15%,45%); }
+
+.password-toggle {
+  position: absolute;
+  right: .75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  padding: .25rem;
+  line-height: 1;
+}
+
+/* ── Checkbox ─────────────────────────────────────────────────────────────── */
+.form-check {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.5rem;
+}
+.check-input {
+  width: 1rem; height: 1rem;
+  border-radius: 3px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.check-label { font-size: .875rem; color: var(--text-secondary); cursor: pointer; }
+
+/* ── Primary Button ───────────────────────────────────────────────────────── */
+.btn-primary {
+  width: 100%;
+  padding: .875rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: .9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  gap: .5rem;
+}
+.btn-primary:hover:not(:disabled) {
+  opacity: .92;
+  -webkit-transform: translateY(-1px); transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+.btn-spinner { -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.auth-footer { text-align: center; margin-top: 2rem; font-size: .75rem; color: var(--text-secondary); }
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+@-webkit-keyframes fadeInUp {
+  from { opacity:0; -webkit-transform:translateY(20px); } to { opacity:1; -webkit-transform:translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); }
+}
+@-webkit-keyframes slideInLeft {
+  from { opacity:0; -webkit-transform:translateX(-20px); } to { opacity:1; -webkit-transform:translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform:rotate(0deg); } to { -webkit-transform:rotate(360deg); }
+}
+@keyframes spin {
+  from { transform:rotate(0deg); } to { transform:rotate(360deg); }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .auth-panel-left  { display: none; }
+  .auth-panel-right { padding: 1.5rem 1.25rem; }
+}

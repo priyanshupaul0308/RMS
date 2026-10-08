@@ -1,0 +1,19 @@
+# CodeIgniter 4 writable storage
+/writable/cache/*
+!/writable/cache/.gitkeep
+/writable/debugbar/*
+!/writable/debugbar/.gitkeep
+/writable/logs/*
+!/writable/logs/.gitkeep
+/writable/session/*
+!/writable/session/.gitkeep
+/writable/backups/*
+!/writable/backups/.gitkeep
+/writable/uploads/*
+!/writable/uploads/.gitkeep
+
+# System & Cache
+.phpunit.result.cache
+Thumbs.db
+Desktop.ini
+.DS_Store

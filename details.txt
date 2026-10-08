@@ -1,0 +1,35 @@
+=====================================================
+RMS (Restaurant Management System) - Staff Credentials
+=====================================================
+
+1. Super Admin
+   Email    : admin@rms.local
+   Password : Admin@123
+   Role     : Administrator
+
+2. Manager
+   Email    : manager.cp@rms.local
+   Password : Manager@123
+   Role     : Manager
+
+3. Cashier
+   Email    : sudesh@gmail.com
+   Password : Cashier@123
+   Role     : Cashier
+
+4. Waiter
+   Email    : subh@gmail.com
+   Password : 147852369
+   Role     : Waiter
+
+5. Chef
+   Email    : chef@rms.local
+   Password : Chef@123
+   Role     : Chef
+
+-----------------------------------------------------
+Database service command (if stopped on system reboot):
+PowerShell (Run as Administrator):
+Start-Service -Name MYSQL80
+Set-Service -Name MYSQL80 -StartupType Automatic
+-----------------------------------------------------
