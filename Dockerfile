@@ -24,10 +24,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Pre-configure MariaDB runtime directories
-RUN mkdir -p /run/mysqld /var/lib/mysql \
-    && chown -R mysql:mysql /run/mysqld /var/lib/mysql \
-    && chmod 777 /run/mysqld
+# Pre-configure MariaDB runtime directories and initialize system datadir
+RUN mkdir -p /run/mysqld /var/run/mysqld /var/lib/mysql /var/log/mysql \
+    && chown -R mysql:mysql /run/mysqld /var/run/mysqld /var/lib/mysql /var/log/mysql \
+    && chmod 777 /run/mysqld /var/run/mysqld \
+    && (mariadb-install-db --user=mysql --datadir=/var/lib/mysql || mysql_install_db --user=mysql --datadir=/var/lib/mysql)
+
+# Configure PHP default MySQL socket
+RUN echo "pdo_mysql.default_socket=/run/mysqld/mysqld.sock\nmysqli.default_socket=/run/mysqld/mysqld.sock" > /usr/local/etc/php/conf.d/docker-php-ext-mysql-socket.ini
 
 # Enable Apache mod_rewrite and mod_headers
 RUN a2enmod rewrite headers
