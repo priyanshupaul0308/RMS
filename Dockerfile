@@ -30,8 +30,9 @@ RUN mkdir -p /run/mysqld /var/run/mysqld /var/lib/mysql /var/log/mysql \
     && chmod 777 /run/mysqld /var/run/mysqld \
     && (mariadb-install-db --user=mysql --datadir=/var/lib/mysql || mysql_install_db --user=mysql --datadir=/var/lib/mysql)
 
-# Configure PHP default MySQL socket
-RUN echo "pdo_mysql.default_socket=/run/mysqld/mysqld.sock\nmysqli.default_socket=/run/mysqld/mysqld.sock" > /usr/local/etc/php/conf.d/docker-php-ext-mysql-socket.ini
+# Configure PHP default MySQL socket and OPcache
+RUN echo "pdo_mysql.default_socket=/run/mysqld/mysqld.sock\nmysqli.default_socket=/run/mysqld/mysqld.sock" > /usr/local/etc/php/conf.d/docker-php-ext-mysql-socket.ini \
+    && echo "opcache.enable=1\nopcache.memory_consumption=128\nopcache.interned_strings_buffer=8\nopcache.max_accelerated_files=10000\nopcache.revalidate_freq=2\nopcache.fast_shutdown=1" > /usr/local/etc/php/conf.d/docker-php-ext-opcache-recommended.ini
 
 # Enable Apache mod_rewrite and mod_headers
 RUN a2enmod rewrite headers

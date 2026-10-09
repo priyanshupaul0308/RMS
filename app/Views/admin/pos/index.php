@@ -32,6 +32,16 @@
     </div>
   </div>
 
+  <!-- MOBILE POS VIEW SWITCHER (Visible on tablets and phones <= 992px) -->
+  <div class="pos-mobile-nav" id="pos-mobile-nav">
+    <button type="button" class="pos-mobile-tab-btn active" id="btn-pos-menu" onclick="switchPosMobileView('menu')">
+      🍽️ Menu Catalog
+    </button>
+    <button type="button" class="pos-mobile-tab-btn" id="btn-pos-cart" onclick="switchPosMobileView('cart')">
+      🛒 Order Cart <span class="mobile-cart-badge" id="mobile-cart-count" style="display:none;">0</span>
+    </button>
+  </div>
+
   <!-- MAIN POS LAYOUT -->
   <div class="pos-body">
     
@@ -1200,7 +1210,16 @@ function updateCartDisplay() {
       document.getElementById('sum-total').textContent = '₹0.00';
       document.getElementById('settle-amount-display').textContent = '₹0.00';
     }
+    var mb = document.getElementById('mobile-cart-count');
+    if (mb) { mb.textContent = '0'; mb.style.display = 'none'; }
     return;
+  }
+
+  var mb = document.getElementById('mobile-cart-count');
+  if (mb) {
+    var totalQty = cart.reduce(function(acc, i) { return acc + i.quantity; }, 0);
+    mb.textContent = totalQty;
+    mb.style.display = totalQty > 0 ? 'inline-block' : 'none';
   }
 
   var html = '';
@@ -1878,6 +1897,25 @@ function resetPosState() {
   clearCustomerInfo();
   cart = [];
   updateCartDisplay();
+}
+
+function switchPosMobileView(view) {
+  var menuSec = document.querySelector('.pos-menu-section');
+  var cartSec = document.querySelector('.pos-cart-section');
+  var btnMenu = document.getElementById('btn-pos-menu');
+  var btnCart = document.getElementById('btn-pos-cart');
+  if (!menuSec || !cartSec) return;
+  if (view === 'cart') {
+    menuSec.classList.add('mobile-hidden');
+    cartSec.classList.remove('mobile-hidden');
+    if (btnMenu) btnMenu.classList.remove('active');
+    if (btnCart) btnCart.classList.add('active');
+  } else {
+    menuSec.classList.remove('mobile-hidden');
+    cartSec.classList.add('mobile-hidden');
+    if (btnMenu) btnMenu.classList.add('active');
+    if (btnCart) btnCart.classList.remove('active');
+  }
 }
 
 // Close modals when clicking backdrop or pressing Escape

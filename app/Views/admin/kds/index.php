@@ -312,6 +312,28 @@
   background: var(--surface);
   border-top: 1px solid var(--border);
 }
+
+@media (max-width: 768px) {
+  .kds-topbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+  .kds-topbar > div {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .kds-station-chips {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 0.25rem;
+  }
+  .kds-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+}
 </style>
 
 <!-- KDS JAVASCRIPT & AUDIO ENGINE -->

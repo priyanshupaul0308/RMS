@@ -218,6 +218,10 @@ class App extends BaseConfig
             $this->baseURL = rtrim($renderUrl, '/') . '/';
         } elseif ($appUrl = getenv('APP_BASE_URL')) {
             $this->baseURL = rtrim($appUrl, '/') . '/';
+        } elseif (isset($_SERVER['HTTP_HOST']) && (!empty($_SERVER['HTTP_X_FORWARDED_HOST']) || !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) || strpos($_SERVER['HTTP_HOST'], 'localhost') === false)) {
+            $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https://' : 'http://';
+            $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
+            $this->baseURL = rtrim($proto . $host, '/') . '/';
         }
     }
 }

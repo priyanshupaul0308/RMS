@@ -104,16 +104,38 @@
     });
   }
 
+  var backdrop = document.getElementById('sidebar-backdrop');
   if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener('click', function () {
-      sidebar.classList.toggle('mobile-open');
+    mobileToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = sidebar.classList.toggle('mobile-open');
+      document.body.classList.toggle('sidebar-open', isOpen);
     });
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        sidebar.classList.remove('mobile-open');
+        document.body.classList.remove('sidebar-open');
+      });
+    }
+
     // Close on outside click
     document.addEventListener('click', function (e) {
       if (sidebar.classList.contains('mobile-open') &&
           !sidebar.contains(e.target) && e.target !== mobileToggle) {
         sidebar.classList.remove('mobile-open');
+        document.body.classList.remove('sidebar-open');
       }
+    });
+
+    // Auto close sidebar when a navigation item is tapped on mobile
+    sidebar.querySelectorAll('.nav-item').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (window.innerWidth <= 992) {
+          sidebar.classList.remove('mobile-open');
+          document.body.classList.remove('sidebar-open');
+        }
+      });
     });
   }
 

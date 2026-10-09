@@ -278,6 +278,7 @@
   </div>
 
 </aside><!-- /.sidebar -->
+<div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <!-- MAIN CONTENT AREA -->

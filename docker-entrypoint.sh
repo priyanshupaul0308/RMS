@@ -15,6 +15,14 @@ mkdir -p /var/www/html/writable/cache /var/www/html/writable/logs /var/www/html/
 chown -R www-data:www-data /var/www/html/writable
 chmod -R 775 /var/www/html/writable
 
+# Optimize CodeIgniter environment for production deployment
+if [ -f /var/www/html/.env ]; then
+    if [ -n "$RENDER_EXTERNAL_URL" ]; then
+        sed -i "s|app.baseURL = .*|app.baseURL = '${RENDER_EXTERNAL_URL}/'|g" /var/www/html/.env
+    fi
+    sed -i "s|CI_ENVIRONMENT = development|CI_ENVIRONMENT = production|g" /var/www/html/.env
+fi
+
 # Ensure MariaDB runtime directories exist
 mkdir -p /run/mysqld /var/run/mysqld /var/lib/mysql /var/log/mysql
 chown -R mysql:mysql /run/mysqld /var/run/mysqld /var/lib/mysql /var/log/mysql
