@@ -60,14 +60,8 @@ else
     ln -sf /run/mysqld/mysqld.sock /tmp/mysql.sock 2>/dev/null || true
 
     # Setup database and user privileges for both localhost and 127.0.0.1
-    mysql -u root <<EOF || mysql -u root -proot <<EOF || true
-CREATE DATABASE IF NOT EXISTS \`rms_db\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY 'root';
-CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY 'root' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-EOF
+    SQL_SETUP="CREATE DATABASE IF NOT EXISTS \`rms_db\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY 'root'; CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY 'root'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION; GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY 'root' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+    mysql -u root -e "$SQL_SETUP" 2>/dev/null || mysql -u root -proot -e "$SQL_SETUP" 2>/dev/null || true
 
     # Import schema if tables not present
     TABLE_COUNT=$(mysql -u root -proot rms_db -e "SHOW TABLES;" 2>/dev/null | wc -l || echo "0")
