@@ -114,7 +114,7 @@
       <?php endif; ?>
     </div>
 
-    <!-- Inventory (Phase 6) -->
+    <!-- Inventory -->
     <div class="nav-section">
       <div class="nav-section-title">Inventory & Stock</div>
 
@@ -142,7 +142,7 @@
       <?php endif; ?>
     </div>
 
-    <!-- CRM (Phase 7) -->
+    <!-- CRM & Loyalty -->
     <div class="nav-section">
       <div class="nav-section-title">CRM & Loyalty</div>
 

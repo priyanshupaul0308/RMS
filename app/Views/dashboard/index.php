@@ -61,7 +61,7 @@
 
   <div class="card">
     <div class="card-header">
-      <span class="card-title">📦 Inventory &amp; Stock (Phase 6)</span>
+      <span class="card-title">📦 Inventory &amp; Stock</span>
       <a href="<?= site_url('admin/inventory') ?>" class="btn btn-primary btn-sm">Stock View</a>
     </div>
     <div class="card-body">
@@ -76,7 +76,7 @@
 
   <div class="card">
     <div class="card-header">
-      <span class="card-title">👥 CRM &amp; Loyalty (Phase 7)</span>
+      <span class="card-title">👥 CRM &amp; Loyalty</span>
       <a href="<?= site_url('admin/crm') ?>" class="btn btn-primary btn-sm">Guest Directory</a>
     </div>
     <div class="card-body">
@@ -87,7 +87,7 @@
 
   <div class="card">
     <div class="card-header">
-      <span class="card-title">📈 BI Analytics &amp; Audit (Phase 7)</span>
+      <span class="card-title">📈 BI Analytics &amp; Audit</span>
       <a href="<?= site_url('admin/analytics') ?>" class="btn btn-primary btn-sm">Executive BI</a>
     </div>
     <div class="card-body">
